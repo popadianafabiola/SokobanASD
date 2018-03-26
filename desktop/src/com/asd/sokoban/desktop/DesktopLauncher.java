@@ -11,4 +11,7 @@ public class DesktopLauncher {
 		config.width = 480;
 		new LwjglApplication(new SokobanGame(), config);
 	}
+
 }
+
+

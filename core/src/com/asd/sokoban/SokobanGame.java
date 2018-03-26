@@ -6,34 +6,42 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SokobanGame extends ApplicationAdapter {
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class SokobanGame extends Game {
 	SpriteBatch batch;
 	Texture img;
-	int x;
-	int y;
-	
+
+	public SplashScreen spashScreen;
+	public FirstScreen firstScreen;
+
+
+
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		// menuScreen = new MenuScreen(this);
+		spashScreen = new SplashScreen(this);
+		//firstScreen = new FirstScreen(this);
+		setScreen(spashScreen);
+	}
+
+
+	public void switchToFirstScreen() {
+		firstScreen = new FirstScreen(this);
+		setScreen(firstScreen);
 	}
 
 	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if (Gdx.input.isTouched()) {
-			x+=10;
-			y++;
-		}
-		batch.begin();
-		batch.draw(img, x, y);
-		batch.end();
+	public void render() {
+		super.render();
 	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
-	}
+
+
 }
+
+
+
