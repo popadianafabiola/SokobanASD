@@ -18,6 +18,9 @@ public class SokobanGame extends Game {
 
 	public SplashScreen spashScreen;
 	public FirstScreen firstScreen;
+	//public LevelCompleteScreen levelCompleteScreen;
+
+
 
 
 
