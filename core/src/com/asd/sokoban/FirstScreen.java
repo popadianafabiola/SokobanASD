@@ -88,7 +88,7 @@ public class FirstScreen implements Screen, InputProcessor {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-                //game.switchToShopScreen();
+                game.switchToShopScreen();
                 return true;
             }
         });

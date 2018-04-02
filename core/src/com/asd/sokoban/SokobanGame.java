@@ -18,7 +18,7 @@ public class SokobanGame extends Game {
 
 	public SplashScreen spashScreen;
 	public FirstScreen firstScreen;
-	//public LevelCompleteScreen levelCompleteScreen;
+	public ShopScreen shopScreen;
 
 
 
@@ -36,6 +36,11 @@ public class SokobanGame extends Game {
 	public void switchToFirstScreen() {
 		firstScreen = new FirstScreen(this);
 		setScreen(firstScreen);
+	}
+
+	public void switchToShopScreen() {
+		shopScreen = new ShopScreen(this);
+		setScreen(shopScreen);
 	}
 
 	@Override
