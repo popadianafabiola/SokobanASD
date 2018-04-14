@@ -19,17 +19,21 @@ public class SokobanGame extends Game {
 	public SplashScreen spashScreen;
 	public FirstScreen firstScreen;
 	public ShopScreen shopScreen;
-
+    public LevelSelectScreen levelScreen;
 
 
 
 
 	@Override
 	public void create () {
-		// menuScreen = new MenuScreen(this);
 		spashScreen = new SplashScreen(this);
 		//firstScreen = new FirstScreen(this);
 		setScreen(spashScreen);
+	}
+
+	public void switchToLevelSelectScreen() {
+		levelScreen = new LevelSelectScreen(this);
+		setScreen(levelScreen);
 	}
 
 

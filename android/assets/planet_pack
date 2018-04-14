@@ -1,0 +1,11 @@
+planet
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1410896615_Internet-Explorer
+  rotate: false
+  xy: 2, 2
+  size: 118, 120
+  orig: 128, 128
+  offset: 5, 7
+  index: -1

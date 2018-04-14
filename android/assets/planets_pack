@@ -1,0 +1,18 @@
+planets
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+planet1
+  rotate: false
+  xy: 2, 2
+  size: 122, 122
+  orig: 128, 128
+  offset: 3, 5
+  index: -1
+planet2
+  rotate: false
+  xy: 126, 2
+  size: 118, 120
+  orig: 128, 128
+  offset: 5, 7
+  index: -1
