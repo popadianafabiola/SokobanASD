@@ -1,3 +1,4 @@
+package com.asd.sokoban;
 /**
  * Created by fabii on 26.03.2018.
  */

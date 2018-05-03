@@ -123,7 +123,7 @@ public class LevelSelectScreen implements Screen, InputProcessor {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-                    //game.switchToGameScreen(Integer.parseInt(textButton.getLabel().getText().toString()));
+                    game.switchToGameScreen(Integer.parseInt(textButton.getLabel().getText().toString()));
                     return true;
                 }
             });

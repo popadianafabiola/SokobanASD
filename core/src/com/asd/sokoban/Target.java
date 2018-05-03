@@ -1,3 +1,5 @@
+package com.asd.sokoban;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 

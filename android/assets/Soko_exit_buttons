@@ -1,0 +1,18 @@
+exit_buttons_pack.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+exit_button
+  rotate: false
+  xy: 2, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+exit_buttonreversed
+  rotate: false
+  xy: 260, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1

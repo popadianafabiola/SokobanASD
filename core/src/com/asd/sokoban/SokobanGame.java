@@ -20,9 +20,19 @@ public class SokobanGame extends Game {
 	public FirstScreen firstScreen;
 	public ShopScreen shopScreen;
     public LevelSelectScreen levelScreen;
+    public LevelCompleteScreen levelCompleteScreen;
+    public GameScreen gameScreen;
+
+	public void switchToGameScreen(int level) {
+		gameScreen = new GameScreen(this, level);
+		setScreen(gameScreen);
+	}
 
 
-
+	public void switchToLevelCompleteScreen(int level) {
+		levelCompleteScreen = new LevelCompleteScreen(this, level);
+		setScreen(levelCompleteScreen);
+	}
 
 	@Override
 	public void create () {
