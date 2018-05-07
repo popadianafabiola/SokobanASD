@@ -25,7 +25,7 @@ public class GameScreen implements Screen, InputProcessor {
     private World world;
     private WorldRenderer renderer;
     private int level;
-    private ArrayList<State> states;
+    private SinglyLinkedList<State> states;
     private BitmapFont font;
 
 
@@ -64,7 +64,7 @@ public class GameScreen implements Screen, InputProcessor {
         font = new BitmapFont();
 
         //hold the initial player position
-        states = new ArrayList<State>();
+        states = new SinglyLinkedList<State>();
         addState(world.getPlayer().getPosition().x, world.getPlayer().getPosition().y, -1, 0, 0);
 
         //hold the initial boxes position
@@ -662,7 +662,7 @@ public class GameScreen implements Screen, InputProcessor {
         if(states.size() > 1) {
             if (states.get(states.size() - 1).getBoxId() == -1) {
                 //there is no box
-                states.remove(states.size() - 1); //remove the last element
+                states.remove(states.get(states.size() - 1)); //remove the last element
                 //update the map
                 // world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y] = 0; //clear the spot
                 world.getPlayer().setPosition(new Vector2(states.get(states.size() - 1).getPlayerX(), states.get(states.size() - 1).getPlayerY()));
@@ -691,7 +691,7 @@ public class GameScreen implements Screen, InputProcessor {
                     world.map[(int)world.getBoxes().get((int)id ).getPosition().x][(int)world.getBoxes().get((int)id).getPosition().y] = 0; //clears the spot
                     world.getBoxes().get((int) id ).setPosition(new Vector2(newBoxX, newBoxY)); //new box position
                     world.map[(int)world.getBoxes().get((int)id ).getPosition().x][(int)world.getBoxes().get((int)id ).getPosition().y] = (int)id + 1;//mark the spot
-                    states.remove(states.size() -1);
+                    states.remove(states.get(states.size() -1));
                     //world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y] = 0;
                     world.getPlayer().setPosition(new Vector2(states.get(states.size() -1).getPlayerX(), states.get(states.size() -1).getPlayerY()));
 
@@ -702,7 +702,7 @@ public class GameScreen implements Screen, InputProcessor {
                     world.getBoxes().get((int)id ).setPosition(new Vector2(initialBoxes.get((int)id).getPosition().x, initialBoxes.get((int)id).getPosition().y));//box new position
                     world.map[(int)world.getBoxes().get((int)id ).getPosition().x][(int)world.getBoxes().get((int)id ).getPosition().y] = (int)id + 1;
 
-                    states.remove(states.size() -1);
+                    states.remove(states.get(states.size() -1));
                     // world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y] = 0;
                     world.getPlayer().setPosition(new Vector2(states.get(states.size() - 1).getPlayerX(), states.get(states.size() - 1).getPlayerY()));
                 }
