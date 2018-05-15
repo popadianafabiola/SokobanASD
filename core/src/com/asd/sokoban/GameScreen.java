@@ -25,7 +25,7 @@ public class GameScreen implements Screen, InputProcessor {
     private World world;
     private WorldRenderer renderer;
     private int level;
-    private SinglyLinkedList<State> states;
+    private ArrayList<State> states;
     private BitmapFont font;
 
 
@@ -64,7 +64,7 @@ public class GameScreen implements Screen, InputProcessor {
         font = new BitmapFont();
 
         //hold the initial player position
-        states = new SinglyLinkedList<State>();
+        states = new ArrayList<State>();
         addState(world.getPlayer().getPosition().x, world.getPlayer().getPosition().y, -1, 0, 0);
 
         //hold the initial boxes position
@@ -110,7 +110,6 @@ public class GameScreen implements Screen, InputProcessor {
         undoButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
                 undoMove();
                 return true;
             }
@@ -221,6 +220,9 @@ public class GameScreen implements Screen, InputProcessor {
                 List<IntPair> queue = new ArrayList<IntPair>();
                 queue.add(new IntPair((int)world.getPlayer().getPosition().x,(int) world.getPlayer().getPosition().y));
                 boolean[][] visited = new boolean[100][100];
+                // now replaced with tree search
+                BinarySearchTree<IntPair, Boolean> visitedLoc = new BinarySearchTree<IntPair, Boolean>();
+
                 int foundX = 0;
                 int foundY = 0;
 
@@ -279,6 +281,7 @@ public class GameScreen implements Screen, InputProcessor {
 
                         //end of checking neighbours
                         visited[vertexX][vertexY] = true;
+                        visitedLoc.insert(new IntPair(vertexX, vertexY), true);
                         queue.remove(i);
 
                     }
@@ -658,55 +661,58 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void undoMove() {
-
-        if(states.size() > 1) {
-            if (states.get(states.size() - 1).getBoxId() == -1) {
-                //there is no box
-                states.remove(states.get(states.size() - 1)); //remove the last element
-                //update the map
-                // world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y] = 0; //clear the spot
-                world.getPlayer().setPosition(new Vector2(states.get(states.size() - 1).getPlayerX(), states.get(states.size() - 1).getPlayerY()));
-                //does not matter any more: world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y]
-
-
-            } else {
-                //there is a box
-                boolean found = false;
-                float newBoxX = 0;
-                float newBoxY = 0;
-                float id = states.get(states.size() -1).getBoxId();
-                //now we see the last time the boxed was moved
-                for(int i=states.size() - 2; i >=0; i--) {
-                    if(states.get(i).getBoxId() == id) {
-                        found = true;
-                        //save the previous box position
-                        newBoxX = states.get(i).getBoxX();
-                        newBoxY = states.get(i).getBoxY();
-                        break;
-                    }
-                }
-
-                if(found == true) {
+        try {
+            if (states.size() > 1) {
+                if (states.get(states.size() - 1).getBoxId() == -1) {
+                    //there is no box
+                    states.remove(states.size() - 1);//remove the last element
                     //update the map
-                    world.map[(int)world.getBoxes().get((int)id ).getPosition().x][(int)world.getBoxes().get((int)id).getPosition().y] = 0; //clears the spot
-                    world.getBoxes().get((int) id ).setPosition(new Vector2(newBoxX, newBoxY)); //new box position
-                    world.map[(int)world.getBoxes().get((int)id ).getPosition().x][(int)world.getBoxes().get((int)id ).getPosition().y] = (int)id + 1;//mark the spot
-                    states.remove(states.get(states.size() -1));
-                    //world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y] = 0;
-                    world.getPlayer().setPosition(new Vector2(states.get(states.size() -1).getPlayerX(), states.get(states.size() -1).getPlayerY()));
+                    // world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y] = 0; //clear the spot
+                    world.getPlayer().setPosition(new Vector2(states.get(states.size() - 1).getPlayerX(), states.get(states.size() - 1).getPlayerY()));
+                    //does not matter any more: world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y]
+
 
                 } else {
-                    //set the initial position
-                    //System.out.println(initialBoxes.get((int)id).getPosition().x + " " + initialBoxes.get((int)id).getPosition().y);
-                    world.map[(int)world.getBoxes().get((int)id ).getPosition().x][(int)world.getBoxes().get((int)id ).getPosition().y] = 0; //clears the spot
-                    world.getBoxes().get((int)id ).setPosition(new Vector2(initialBoxes.get((int)id).getPosition().x, initialBoxes.get((int)id).getPosition().y));//box new position
-                    world.map[(int)world.getBoxes().get((int)id ).getPosition().x][(int)world.getBoxes().get((int)id ).getPosition().y] = (int)id + 1;
+                    //there is a box
+                    boolean found = false;
+                    float newBoxX = 0;
+                    float newBoxY = 0;
+                    float id = states.get(states.size() - 1).getBoxId();
+                    //now we see the last time the boxed was moved
+                    for (int i = states.size() - 2; i >= 0; i--) {
+                        if (states.get(i) != null && states.get(i).getBoxId() == id) {
+                            found = true;
+                            //save the previous box position
+                            newBoxX = states.get(i).getBoxX();
+                            newBoxY = states.get(i).getBoxY();
+                            break;
+                        }
+                    }
 
-                    states.remove(states.get(states.size() -1));
-                    // world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y] = 0;
-                    world.getPlayer().setPosition(new Vector2(states.get(states.size() - 1).getPlayerX(), states.get(states.size() - 1).getPlayerY()));
+                    if (found == true) {
+                        //update the map
+                        world.map[(int) world.getBoxes().get((int) id).getPosition().x][(int) world.getBoxes().get((int) id).getPosition().y] = 0; //clears the spot
+                        world.getBoxes().get((int) id).setPosition(new Vector2(newBoxX, newBoxY)); //new box position
+                        world.map[(int) world.getBoxes().get((int) id).getPosition().x][(int) world.getBoxes().get((int) id).getPosition().y] = (int) id + 1;//mark the spot
+                        states.remove(states.size() - 1);
+                        //world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y] = 0;
+                        world.getPlayer().setPosition(new Vector2(states.get(states.size() - 1).getPlayerX(), states.get(states.size() - 1).getPlayerY()));
+
+                    } else {
+                        //set the initial position
+                        //System.out.println(initialBoxes.get((int)id).getPosition().x + " " + initialBoxes.get((int)id).getPosition().y);
+                        world.map[(int) world.getBoxes().get((int) id).getPosition().x][(int) world.getBoxes().get((int) id).getPosition().y] = 0; //clears the spot
+                        world.getBoxes().get((int) id).setPosition(new Vector2(initialBoxes.get((int) id).getPosition().x, initialBoxes.get((int) id).getPosition().y));//box new position
+                        world.map[(int) world.getBoxes().get((int) id).getPosition().x][(int) world.getBoxes().get((int) id).getPosition().y] = (int) id + 1;
+
+                        states.remove(states.size() - 1);
+                        // world.map[(int)world.getPlayer().getPosition().x][(int)world.getPlayer().getPosition().y] = 0;
+                        world.getPlayer().setPosition(new Vector2(states.get(states.size() - 1).getPlayerX(), states.get(states.size() - 1).getPlayerY()));
+                    }
                 }
             }
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
         }
 
     }

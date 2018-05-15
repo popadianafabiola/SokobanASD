@@ -85,7 +85,10 @@ public class LevelSelectScreen implements Screen, InputProcessor {
 
         //add the back button
         TextButton backButton = new TextButton("Back", uiSkin);
-        backButton.setPosition(0,Gdx.graphics.getHeight() - backButton.getHeight());
+        float scale = (Gdx.graphics.getWidth() / 6)/backButton.getWidth();
+        backButton.setPosition(0,Gdx.graphics.getHeight() - backButton.getHeight() * scale);
+        backButton.setTransform(true);
+        backButton.setScale(scale,scale);
         backButton.addListener(new InputListener() {
                                    @Override
                                    public boolean touchDown(InputEvent event, float x, float y, int pointer, final int button) {

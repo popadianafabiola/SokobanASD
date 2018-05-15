@@ -4,19 +4,19 @@ package com.asd.sokoban;
  * Created by fabii on 03.04.2018.
  */
 
-    import com.badlogic.gdx.Gdx;
-    import com.badlogic.gdx.InputProcessor;
-    import com.badlogic.gdx.Preferences;
-    import com.badlogic.gdx.Screen;
-    import com.badlogic.gdx.graphics.GL20;
-    import com.badlogic.gdx.graphics.Texture;
-    import com.badlogic.gdx.graphics.g2d.BitmapFont;
-    import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-    import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-    import com.badlogic.gdx.scenes.scene2d.InputEvent;
-    import com.badlogic.gdx.scenes.scene2d.InputListener;
-    import com.badlogic.gdx.scenes.scene2d.Stage;
-    import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 
 
 public class ShopScreen implements Screen, InputProcessor {
@@ -76,6 +76,9 @@ public class ShopScreen implements Screen, InputProcessor {
 
         //add the back button
         TextButton backButton = new TextButton("Back", uiSkin);
+        // changed size - button is larget
+        backButton.setHeight(BUTTON_SIZE);
+        backButton.setWidth(BUTTON_SIZE);
         backButton.setPosition(0,Gdx.graphics.getHeight() - backButton.getHeight());
         backButton.addListener(new InputListener() {
                                    @Override
@@ -86,7 +89,6 @@ public class ShopScreen implements Screen, InputProcessor {
                                    }
                                }
         );
-
         stage.addActor(backButton);
 
         //load the heroes atlas

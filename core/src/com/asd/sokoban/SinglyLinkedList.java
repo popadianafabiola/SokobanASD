@@ -1,5 +1,4 @@
 package com.asd.sokoban;
-import java.util.*;
 
 /**
  * Created by fabii on 05.05.2018.
@@ -28,6 +27,16 @@ public class SinglyLinkedList<E> {
         size++;
     }
 
+    public void pop() {
+        Node current = head;
+        for (int i = 0; (i < size) && (current.getNext().getNext() != null); i++) {
+            current = current.getNext();
+        }
+
+        current.setNext(null);
+        size--;
+    }
+
     public void insertBefore(E elem1, E elem2){
         Node temp = new Node(elem2);
         Node current = head;
@@ -43,6 +52,13 @@ public class SinglyLinkedList<E> {
     public E get(int pos) {
         Node current = head;
         for(int i = 0; i < pos; i++)
+            current = current.getNext();
+        return current.getData();
+    }
+
+    public E back() {
+        Node current = head;
+        for(int i = 0; i < size; i++)
             current = current.getNext();
         return current.getData();
     }
